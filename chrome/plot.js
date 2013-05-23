@@ -1,0 +1,51 @@
+function randomData(points) { //# groups,# points per group
+        random = d3.random.normal();
+    var d1 = [],
+        d2 = [];
+    for (j = 0; j < points; j++) {
+        d1.push({x:j, y: random()});
+        d2.push({x:j, y: random()});
+    }
+    return [
+    {
+        values: d1,
+        key: 'HbO2',
+        color: '#df0000',
+    },{
+        values: d2,
+        key: 'Hb',
+        color: '#3000ff',
+    }];
+}
+/*var onGetPorts = function(ports) {
+  for (var i=0; i<ports.length; i++) {
+  console.log(ports[i]);
+  }
+  }
+  chrome.serial.getPorts(onGetPorts);
+  */
+
+var charts = Array();
+var numCharts = 8;
+for(i =0; i < numCharts; i++) {
+  var chartdiv  =d3.select("body").append("div")
+        .attr("id", "chart" + i);
+  chartdiv.append("div").attr("class","heading").text("Sensor "+i);
+  chartdiv.append("svg")
+}
+
+for(i =0; i < numCharts; i++) {
+    var chart;
+    chart = nv.models.lineChart();
+    chart.xAxis.tickFormat(d3.format('.02f'));
+    chart.yAxis.tickFormat(d3.format('.02f'));
+
+d3.select('#chart' + i + ">svg")
+    .datum(randomData(40))
+    .transition().duration(500)
+    .call(chart);
+    nv.utils.windowResize(chart.update);
+    chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+nv.render();
+charts.push(chart);
+}
