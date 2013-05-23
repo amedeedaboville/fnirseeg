@@ -1,11 +1,11 @@
 {
-  "name": "Hello World!",
+  "name": "FNIRS viewer",
   "description": "Visualize FNIRS data.",
   "version": "0.1",
-  "permissions": ["serial"],
+  "permissions": ["serial","fileSystem", "fileSystem.write"],
   "app": {
     "background": {
     "scripts": ["background.js"]}
     },
-  "icons": { "16": "calculator-16.png", "128": "calculator-128.png" }
+  "icons": { "16": "graphs-16.png", "128": "graphs-128.png" }
 }
