@@ -1,29 +1,44 @@
-function randomData(points) { //# groups,# points per group
-    random = d3.random.normal();
-    var d1 = [],
-        d2 = [];
-    for (j = 0; j < points; j++) {
-        d1.push({x:j, y: random()});
-        d2.push({x:j, y: random()});
-    }
-    return [
+var receiveArduino = function (connectionInfo) {
+    console.log(connectionInfo);
+    connectionId = connectionInfo.connectionId; 
+    if (connectionId != -1)
     {
-        values: d1,
-            key: 'HbO2',
-            color: '#df0000',
-    },{
-        values: d2,
-            key: 'Hb',
-            color: '#3000ff',
-    }];
+        var dataRead='';
+        /* Convert an ArrayBuffer to a String, using UTF-8 as the encoding scheme.
+         *    This is consistent with how Arduino sends characters by default */
+        var ab2str=function(buf) {
+            return String.fromCharCode.apply(null, new Uint8Array(buf));
+        };
+
+        var onCharRead=function(readInfo) {
+            if (!connectionInfo) {
+                return;
+            }
+            if (readInfo && readInfo.bytesRead>0 && readInfo.data) {
+                var str=ab2str(readInfo.data);
+                if (str[readInfo.bytesRead-1]==='\n') {
+                    dataRead+=str.substring(0, readInfo.bytesRead-1);
+                    console.log(dataRead);
+                    dataRead="";
+                } else {
+                    dataRead+=str;
+                }
+            }
+            chrome.serial.read(connectionId, 128, onCharRead);
+        }
+            chrome.serial.read(connectionId, 128, onCharRead);
+
+    }
 }
-/*var onGetPorts = function(ports) {
-  for (var i=0; i<ports.length; i++) {
-  console.log(ports[i]);
-  }
-  }
-  chrome.serial.getPorts(onGetPorts);
-  */
+
+var onGetPorts = function(ports) {
+    var port = ports.filter(function (p) { 
+        if(p == '/dev/ttyACM0' || p == '/dev/ttyACM1' || p == 'COM0' || p == 'COM1' || p == '/dev/ttyusb0') return true;
+        else return false})[0];
+    console.log(port);
+    chrome.serial.open(port,{bitrate: 9600},receiveArduino);
+}
+chrome.serial.getPorts(onGetPorts);
 function switchToList() {
     for(i = 0; i < numCharts;i++){
         var chart = $('#chart'+i);
@@ -31,7 +46,7 @@ function switchToList() {
         chart.appendTo($('#sensors'));
         charts[i].update();
     }
-        $('#sensors .row').remove();
+    $('#sensors .row').remove();
 }
 function switchToSensors() {
     var numRows = Math.ceil(numCharts/4);
@@ -57,6 +72,25 @@ for(i =0; i < numCharts; i++) {
     chartdiv.append("svg")
 }
 
+function randomData(points) { //# groups,# points per group
+    random = d3.random.normal();
+    var d1 = [],
+        d2 = [];
+    for (j = 0; j < points; j++) {
+        d1.push({x:j, y: random()});
+        d2.push({x:j, y: random()});
+    }
+    return [
+    {
+        values: d1,
+            key: 'HbO2',
+            color: '#df0000',
+    },{
+        values: d2,
+            key: 'Hb',
+            color: '#3000ff',
+    }];
+}
 for(i =0; i < numCharts; i++) {
     var chart;
     chart = nv.models.lineChart();
