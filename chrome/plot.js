@@ -1,44 +1,7 @@
-var receiveArduino = function (connectionInfo) {
-    console.log(connectionInfo);
-    connectionId = connectionInfo.connectionId; 
-    if (connectionId != -1)
-    {
-        var dataRead='';
-        /* Convert an ArrayBuffer to a String, using UTF-8 as the encoding scheme.
-         *    This is consistent with how Arduino sends characters by default */
-        var ab2str=function(buf) {
-            return String.fromCharCode.apply(null, new Uint8Array(buf));
-        };
-
-        var onCharRead=function(readInfo) {
-            if (!connectionInfo) {
-                return;
-            }
-            if (readInfo && readInfo.bytesRead>0 && readInfo.data) {
-                var str=ab2str(readInfo.data);
-                if (str[readInfo.bytesRead-1]==='\n') {
-                    dataRead+=str.substring(0, readInfo.bytesRead-1);
-                    console.log(dataRead);
-                    dataRead="";
-                } else {
-                    dataRead+=str;
-                }
-            }
-            chrome.serial.read(connectionId, 128, onCharRead);
-        }
-            chrome.serial.read(connectionId, 128, onCharRead);
-
-    }
-}
-
-var onGetPorts = function(ports) {
-    var port = ports.filter(function (p) { 
-        if(p == '/dev/ttyACM0' || p == '/dev/ttyACM1' || p == 'COM0' || p == 'COM1' || p == '/dev/ttyusb0') return true;
-        else return false})[0];
-    console.log(port);
-    chrome.serial.open(port,{bitrate: 9600},receiveArduino);
-}
-chrome.serial.getPorts(onGetPorts);
+/*plot.js
+ * Handles everything on the data tab. Plots data and handles visualizations.
+ *May 23rd Amedee d'Aboville
+ */
 function switchToList() {
     for(i = 0; i < numCharts;i++){
         var chart = $('#chart'+i);
