@@ -6,9 +6,9 @@
         <script src="libs/d3.v2.min.js"></script>
         <script src="libs/nv.d3.min.js"></script>
         <script src="libs/jquery-1.9.1.min.js"></script>
-        <script src="libs/bootstrap.js"></script>
+        <script src="libs/bootstrap.full.min.js"></script>
         <link href="css/nv.d3.css" rel="stylesheet" type="text/css">
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/bootstrap.full.min.css" rel="stylesheet" type="text/css">
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet" type="text/css">
     </head>
@@ -16,14 +16,45 @@
         <div class="row">
             <h1 class="title"> FNIRS EEG Project</h1>
         </div> 
-        <div class="row">
-            <div class="btn-group" data-toggle="buttons-radio">
-                <button class="btn active" id="toSensors">Device view</button>
-                <button class="btn" id="toList">List</button>
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" data-toggle="tab">Display</a></li>
+                <li><a href="#tab2" data-toggle="tab">Arduino</a></li>
+                <li><a href="#tab3" data-toggle="tab">Files</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    Sensors.
+                    <div class="btn-group" data-toggle="buttons-radio">
+                        <button class="btn active" id="toSensors">Device view</button>
+                        <button class="btn" id="toList">List</button>
+                    </div>
+                    <div class="row" id="sensors">
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <div class="row" id="arduinoTabContent">
+                        <div id="status"></div>
+                        <div class="span2 dropdown clearfix">
+                            <ul class="dropdown-menu" id="portsList" role="menu" aria-labelledby="dropdownMenu" style="display:block; height:500px; overflow-y:scroll;position:relative">
+                            </ul>
+                        </div>
+                        <div>
+                            <div id="connectionStatus">Not connected yet</div>
+                            <div class="span3 dropdown clearfix">
+                                <ul class="dropdown-menu" id="recentArduino" role="menu" aria-labelledby="dropdownMenu" style="display:block; height:500px; overflow-y:scroll;position:relative">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab3">
+                    Files.
+                </div>
             </div>
         </div>
-        <div class="row" id="sensors">
-        </div>
+        <script src="main.js"></script>
         <script src="plot.js"></script>
+        <script src="arduino.js"></script>
     </body>
 </html>

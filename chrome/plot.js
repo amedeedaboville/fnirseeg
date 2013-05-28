@@ -2,6 +2,10 @@
  * Handles everything on the data tab. Plots data and handles visualizations.
  *May 23rd Amedee d'Aboville
  */
+function parseIncomingLine(dataLine) {
+    var vals = dataLine.split(",");
+    console.log(vals);
+}
 function switchToList() {
     for(i = 0; i < numCharts;i++){
         var chart = $('#chart'+i);
