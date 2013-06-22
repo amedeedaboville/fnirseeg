@@ -1,11 +1,7 @@
 /*plot.js
- * Handles everything on the data tab. Plots data and handles visualizations.
+ *Handles everything on the data tab. Plots data and handles visualizations.
  *May 23rd Amedee d'Aboville
  */
-function parseIncomingLine(dataLine) {
-    var vals = dataLine.split(",");
-    console.log(vals);
-}
 function switchToList() {
     for(i = 0; i < numCharts;i++){
         var chart = $('#chart'+i);
@@ -15,19 +11,8 @@ function switchToList() {
     }
     $('#sensors .row').remove();
 }
-function switchToSensors() {
-    var numRows = Math.ceil(numCharts/4);
-    for(i = 0; i < numRows;i++){
-        $('#sensors').append('<div class="row" id=row'+i+'></div>')
-            for(j = 0; j < 4; j++) {
-                var chart = $('#chart'+Math.floor((numCharts/numRows*i+j)));
-                chart.attr("class","span3");
-                chart.appendTo($('#row'+i));
-            }
-    }
-}
-
-$('#toSensors').click(switchToSensors);
+function drawHeatMap 
+$('#toSensors').click(drawHeatMap);
 $('#toList').click(switchToList);
 
 var numCharts = 8;

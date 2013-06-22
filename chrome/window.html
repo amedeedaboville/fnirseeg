@@ -12,16 +12,21 @@
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet" type="text/css">
     </head>
+
+
+
     <body>
         <div class="row">
             <h1 class="title"> FNIRS EEG Project</h1>
         </div> 
+
         <div class="tabbable">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab1" data-toggle="tab">Display</a></li>
                 <li><a href="#tab2" data-toggle="tab">Arduino</a></li>
                 <li><a href="#tab3" data-toggle="tab">Files</a></li>
             </ul>
+
             <div class="tab-content">
                 <div class="tab-pane active" id="tab1">
                     Sensors.
@@ -32,22 +37,25 @@
                     <div class="row" id="sensors">
                     </div>
                 </div>
+
                 <div class="tab-pane" id="tab2">
                     <div class="row" id="arduinoTabContent">
-                        <div id="status"></div>
+                        <div class="span3" id="connectionStatus">Not connected.</div>
                         <div class="span2 dropdown clearfix">
-                            <ul class="dropdown-menu" id="portsList" role="menu" aria-labelledby="dropdownMenu" style="display:block; height:500px; overflow-y:scroll;position:relative">
+                            <button class="btn" id="getPorts">Reload ports</button>
+                            <ul class="dropdown-menu" id="portList" role="menu" aria-labelledby="dropdownMenu">
                             </ul>
                         </div>
-                        <div>
-                            <div id="connectionStatus">Not connected yet</div>
-                            <div class="span3 dropdown clearfix">
-                                <ul class="dropdown-menu" id="recentArduino" role="menu" aria-labelledby="dropdownMenu" style="display:block; height:500px; overflow-y:scroll;position:relative">
+                        <div class ="span5" >
+                            Recent arduino messages:
+                            <div class="dropdown clearfix">
+                                <ul class="dropdown-menu" id="recentArduino" role="menu" aria-labelledby="dropdownMenu" style="width:100%">
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="tab-pane" id="tab3">
                     Files.
                 </div>
