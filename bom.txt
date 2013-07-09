@@ -1,0 +1,13 @@
+
+3x 850 LED
+3x 750 LED
+
+8x R1206 4M resistor
+6x M3216 100k resistor
+
+8x OPT101 
+2x 4617 multiplexor
+
+1 flex board
+etching chemicals
+

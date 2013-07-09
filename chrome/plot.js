@@ -2,6 +2,9 @@
  *Handles everything on the data tab. Plots data and handles visualizations.
  *May 23rd Amedee d'Aboville
  */
+class Context() {
+
+}
 function switchToList() {
     for(i = 0; i < numCharts;i++){
         var chart = $('#chart'+i);
@@ -11,7 +14,10 @@ function switchToList() {
     }
     $('#sensors .row').remove();
 }
-function drawHeatMap 
+function drawHeatMap {
+
+
+}
 $('#toSensors').click(drawHeatMap);
 $('#toList').click(switchToList);
 
