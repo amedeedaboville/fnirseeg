@@ -39,6 +39,7 @@ var onConnected = function (info) {
     }
     else {
         $("#connectionStatus").text("Connection to port "+port +" failed.");
+        chrome.serial.getPorts(onGetPorts); //Rescan if the connection didn't work, device might have been physically disconnected.
     }
 }
 var connect = function(newPort) {
@@ -62,9 +63,14 @@ var onGetPorts = function(ports) {
     $("#portList").empty();
     fillPortList(ports);
     port = ports.filter(function (p) { 
-        if(p == '/dev/ttyACM0' || p == '/dev/ttyACM1' || p == 'COM0' || p == 'COM1' || p == '/dev/ttyusb0') return true;
+        if(p == '/dev/ttyACM0' || p == '/dev/ttyACM1' || p == 'COM0' || p == 'COM1' || p == '/dev/ttyusb0' || p == '/dev/tty.usbmodem1411') return true;
         else return false})[0];
     if(typeof port != 'undefined') {
-        $("a[id='"+port+"']").click();
+        $("a[id='"+port+"']").click(); // We call click instead of connect directly so that the item is highlighted in the list.
+    }
+    else {
+      window.setTimeout(function () { 
+        chrome.serial.getPorts(onGetPorts); //If we didn't find an arduino, re scan the list in a bit
+      }, 1000);
     }
 }
